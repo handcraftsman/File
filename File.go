@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"strings"
 )
 
 func EachLine(filename string) chan string {
@@ -20,7 +21,7 @@ func EachLine(filename string) chan string {
 		reader := bufio.NewReader(file)
 		for {
 			line, err := reader.ReadString('\n')
-			output <- line
+			output <- strings.TrimRight(line, "\n\r")
 			if err == io.EOF {
 				break
 			}

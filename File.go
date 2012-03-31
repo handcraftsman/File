@@ -30,3 +30,14 @@ func EachLine(filename string) chan string {
 	}()
 	return output
 }
+
+func Exists(fileName string) bool {
+	_, err := os.Stat(fileName)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+		panic(err)
+	}
+	return true
+}

@@ -5,13 +5,14 @@ package File
 
 import (
 	"bufio"
+	"io"
 	"os"
 )
 
 func EachLine(filename string) chan string {
 	output := make(chan string)
 	go func() {
-		file, err := os.Open(filename, os.O_RDONLY, 0)
+		file, err := os.Open(filename)
 		if err != nil {
 			return
 		}
@@ -20,7 +21,7 @@ func EachLine(filename string) chan string {
 		for {
 			line, err := reader.ReadString('\n')
 			output <- line
-			if err == os.EOF {
+			if err == io.EOF {
 				break
 			}
 		}
